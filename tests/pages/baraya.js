@@ -1,16 +1,16 @@
 
-const { apps } = require('../utils/apps');
-const { createDriver } = require('../utils/driver');
-
-const driver = await createDriver(apps.appPackage);
-
-// Elements (Contoh sementara)
+// Elements
 const elements = {
-    product : driver.$('//*[@text="Sauce Labs Backpack"]/preceding-sibling::android.widget.ImageView'),
-    product_price : driver.$('//*[@text="Sauce Labs Backpack"]/following-sibling::*[@resource-id="com.saucelabs.mydemoapp.android:id/priceTV"]'),
-    increase_button : driver.$('//*[@content-desc="Increase item quantity"]'),
+
+    // Login
+    buttonLoginAsGuest : '//*[@content-desc="atau masuk sebagai tamu"]',
+    buttonLoginWithPhone : '//*[@content-desc="Dengan Nomor Telepon"]',
+    buttonLoginWithEmail : '//*[@content-desc="Gunakan Email"]',
+    buttonLoginWithGoogle : '//*[@content-desc="Gunakan Akun Google"]',
+
+    // Reservasi
+    buttonCloseBanner : '//*[@content-desc="Dismiss"]',
+
 }
 
-module.exports = {
-    elements
-};
+module.exports = { elements };
