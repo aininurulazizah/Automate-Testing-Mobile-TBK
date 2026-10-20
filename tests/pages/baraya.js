@@ -10,6 +10,16 @@ const elements = {
 
     // Reservasi
     buttonCloseBanner : '//*[@content-desc="Dismiss"]',
+    buttonTravelService : '//*[@content-desc="Travel"]',
+    dropdownKeberangkatan : '//*[@content-desc="Pilih Keberangkatan"]',
+    dropdownTujuan : '//*[@content-desc="Pilih Tujuan"]',
+    datePickerKeberangkatan : '//*[@content-desc="Pilih Tanggal Berangkat"]',
+    buttonNextMonth : '//*[@bounds="[923,1286][1058,1421]"]',
+    buttonPreviousMonth : '//*[@bounds="[23,1286][158,1421]"]',
+    optionDateKeberangkatan : (keyword) => `//*[contains(@content-desc, "${keyword}")]`,
+    optionKeberangkatan : (keyword) => `//android.widget.ImageView[contains(@content-desc, "${keyword}")]`,
+    optionTujuan : (keyword) => `//android.widget.ImageView[contains(@content-desc, "${keyword}")]`,
+    buttonCariTiket : '//*[@content-desc="Cari Tiket"]',
 
 }
 

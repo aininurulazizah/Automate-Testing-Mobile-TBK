@@ -3,6 +3,7 @@ const { apps } = require('../utils/apps');
 const { createDriver } = require('../utils/driver');
 const { loginSteps } = require('../steps/login');
 const { reservasiSteps } = require('../steps/reservasi');
+const { testData } = require('../data/reservasi-data');
 
 
 for (const app of apps.filter(app => app.enabled)) {
@@ -10,6 +11,8 @@ for (const app of apps.filter(app => app.enabled)) {
     test.describe(`Mobile Reservation`, () => {
         let driver;
         let steps;
+
+        const data = testData[(app.tag.replace(/^@/, ''))]; //Mengambil data test berdasarkan nama mitra
         
          // Membuat sesi dan membuka aplikasi untuk setiap test case
         test.beforeEach(async () => {
@@ -37,6 +40,11 @@ for (const app of apps.filter(app => app.enabled)) {
         test(`${app.tag} - Mobile - Test Case 1 - One Way Trip`, async () => {
         
             await steps.closeBanner();
+            await steps.pilihLayananTravel();
+            await steps.pilihKeberangkatan(data.Keberangkatan);
+            await steps.pilihTujuan(data.Tujuan);
+            await steps.pilihTanggalBerangkat(data.TanggalPergi);
+            await steps.cariTiket();
             
         });
 
@@ -44,7 +52,7 @@ for (const app of apps.filter(app => app.enabled)) {
         
           console.log(`Menjalankan ${app.tag} - Test Case 2 - Round Trip`);
           
-      });
+        });
         
     });
     
