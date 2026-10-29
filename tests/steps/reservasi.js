@@ -3,7 +3,7 @@ function reservasiSteps(app, driver) {
     const mitra_app = app.replace(/^@/, '');
     
     const { elements } = require(`../pages/${mitra_app}`);
-    const { tapByCoordinates } = require('../utils/helper');
+    const { tapByCoordinates, normalizeRupiah } = require('../utils/helper');
 
     async function closeBanner() {
         const buttonCloseBanner = await driver.$(elements.buttonCloseBanner);
@@ -57,6 +57,17 @@ function reservasiSteps(app, driver) {
         await buttonCariTiket.click();
     }
 
+    async function pilihJadwal() {
+        const parentCardJadwal = await driver.$(elements.parentCardJadwalPertama);
+        const cardJadwal = await parentCardJadwal.$(elements.cardJadwalPertama);
+        const hargaTiket = await cardJadwal.$(elements.labelHargaTiket);
+        const buttonPilihJadwal = await cardJadwal.$(elements.buttonPilihJadwal);
+        const harga_tiket = normalizeRupiah(await hargaTiket.getAttribute('contentDescription'));
+        
+        await buttonPilihJadwal.click();
+        return harga_tiket;
+    }
+
     return {
         closeBanner,
         pilihLayananTravel,
@@ -65,6 +76,7 @@ function reservasiSteps(app, driver) {
         pilihTanggalBerangkat,
         pilihTanggalPulang,
         cariTiket,
+        pilihJadwal,
     }
     
 }

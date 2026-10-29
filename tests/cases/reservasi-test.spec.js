@@ -38,6 +38,8 @@ for (const app of apps.filter(app => app.enabled)) {
 
         // Test case dan langkah - langkah-nya
         test(`${app.tag} - Mobile - Test Case 1 - One Way Trip`, async () => {
+
+            let total_tiket = 0;
         
             await steps.closeBanner();
             await steps.pilihLayananTravel();
@@ -45,6 +47,9 @@ for (const app of apps.filter(app => app.enabled)) {
             await steps.pilihTujuan(data.Tujuan);
             await steps.pilihTanggalBerangkat(data.TanggalPergi);
             await steps.cariTiket();
+            total_tiket = await steps.pilihJadwal();
+
+            console.log(total_tiket);
             
         });
 

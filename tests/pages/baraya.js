@@ -21,6 +21,12 @@ const elements = {
     optionTujuan : (keyword) => `//android.widget.ImageView[contains(@content-desc, "${keyword}")]`,
     buttonCariTiket : '//*[@content-desc="Cari Tiket"]',
 
+    // Daftar Jadwal
+    parentCardJadwalPertama : '//android.widget.ScrollView/*[@index="5"]/*[@index="0"]',
+    cardJadwalPertama : './*[@index="0"]',
+    labelHargaTiket : './/*[@content-desc and contains(@content-desc, "Rp ")]',
+    buttonPilihJadwal : './/*[@content-desc="Pilih"]',
+
 }
 
 module.exports = { elements };
