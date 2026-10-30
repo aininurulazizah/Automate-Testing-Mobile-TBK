@@ -3,7 +3,7 @@ const { apps } = require('../utils/apps');
 const { createDriver } = require('../utils/driver');
 const { loginSteps } = require('../steps/login');
 const { reservasiSteps } = require('../steps/reservasi');
-const { testData } = require('../data/reservasi-data');
+const { testData, createPemesan } = require('../data/reservasi-data');
 
 
 for (const app of apps.filter(app => app.enabled)) {
@@ -11,6 +11,7 @@ for (const app of apps.filter(app => app.enabled)) {
     test.describe(`Mobile Reservation`, () => {
         let driver;
         let steps;
+        let pemesan;
 
         const data = testData[(app.tag.replace(/^@/, ''))]; //Mengambil data test berdasarkan nama mitra
         
@@ -22,6 +23,9 @@ for (const app of apps.filter(app => app.enabled)) {
           // Menyiapkan steps test
           steps = reservasiSteps(app.tag, driver);
           const login_steps = loginSteps(app.tag, driver);
+
+          // Menyiapkan data pemesan
+          pemesan = createPemesan();
 
           // Precondition : Login
           await login_steps.klikMasukSebagaiTamu();
@@ -48,8 +52,9 @@ for (const app of apps.filter(app => app.enabled)) {
             await steps.pilihTanggalBerangkat(data.TanggalPergi);
             await steps.cariTiket();
             total_tiket = await steps.pilihJadwal();
-
-            console.log(total_tiket);
+            total_tiket = await steps.pilihKursi(data.JumlahPenumpang, total_tiket);
+            await steps.isiDataPemesan(pemesan);
+            await steps.isiDataPenumpang(data.JumlahPenumpang, testData.Penumpang);
             
         });
 

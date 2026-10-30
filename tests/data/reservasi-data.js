@@ -80,7 +80,7 @@ function generateRandomEmail() {
 
 function createPemesan() {
     return {
-        NamaPemesan: "Quality Control Tiketux",
+        NamaPemesan: "QCTiketux",
         Email: generateRandomEmail(),
         NoHP: generateRandomPhoneNumber(),
         Alamat: "Bandung",
@@ -107,6 +107,7 @@ const testData = {
             kurang_hari: 0,
             customMonthToIndo: true
         }),
+        JumlahPenumpang: 3,
         MetodeBayar: "Pembayaran Instan",
         PlatformBayar: "QRIS"
     },
@@ -151,4 +152,5 @@ const testData = {
 
 module.exports = {
     testData,
+    createPemesan,
 }

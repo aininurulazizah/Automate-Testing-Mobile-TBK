@@ -2,6 +2,7 @@ function reservasiSteps(app, driver) {
     
     const mitra_app = app.replace(/^@/, '');
     
+    const { expect } = require('@playwright/test');
     const { elements } = require(`../pages/${mitra_app}`);
     const { tapByCoordinates, normalizeRupiah } = require('../utils/helper');
 
@@ -68,6 +69,53 @@ function reservasiSteps(app, driver) {
         return harga_tiket;
     }
 
+    async function pilihKursi(jumlah_penumpang, harga_tiket) {
+        const cardKursi = await driver.$(elements.cardKursi);
+        const listKursiTersedia = await cardKursi.$$(elements.listKursiTersedia);
+        const buttonPilihKursi = await driver.$(elements.buttonPilihKursi);
+
+        for(let i = 0; i < jumlah_penumpang; i++) {
+            await listKursiTersedia[i].click();
+        }
+
+        //Validasi total tiket
+        const labelTotaltiket = await driver.$(elements.labelTotaltiket);
+        const total_tiket_exp = jumlah_penumpang * harga_tiket;
+        const total_tiket_act = normalizeRupiah(await labelTotaltiket.getAttribute('contentDescription'));
+
+        expect(total_tiket_act).toBe(total_tiket_exp);
+
+        await buttonPilihKursi.click();
+
+        return total_tiket_act;
+
+    }
+
+    async function isiDataPemesan(pemesan) {
+        const labelFieldPemesan = await driver.$(elements.labelFieldPemesan);
+        const labelFieldNoHp = await driver.$(elements.labelFieldNoHp);
+        const labelFieldEmail = await driver.$(elements.labelFieldEmail);
+        const fieldPemesan = await driver.$(elements.fieldPemesan);
+        const fieldNoHp = await driver.$(elements.fieldNoHp);
+        const fieldEmail = await driver.$(elements.fieldEmail);
+
+        await fieldPemesan.click();
+        await fieldPemesan.setValue(pemesan.NamaPemesan);
+        await labelFieldPemesan.click();
+
+        await fieldNoHp.click();
+        await fieldNoHp.setValue(pemesan.NoHP);
+        await labelFieldNoHp.click();
+
+        await fieldEmail.click();
+        await fieldEmail.setValue(pemesan.Email);
+        await labelFieldEmail.click();
+    }
+
+    async function isiDataPenumpang(jumlah_penumpang, penumpang) {
+
+    }
+
     return {
         closeBanner,
         pilihLayananTravel,
@@ -77,6 +125,9 @@ function reservasiSteps(app, driver) {
         pilihTanggalPulang,
         cariTiket,
         pilihJadwal,
+        pilihKursi,
+        isiDataPemesan,
+        isiDataPenumpang,
     }
     
 }
